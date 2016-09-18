@@ -1,0 +1,19 @@
+9a10,13
+> #define UP_ARROW	1
+> #define LEFT_ARROW	2
+> #define RIGHT_ARROW	3
+> #define DOWN_ARROW	4
+102,103c106,115
+<             if ((ch==0x48) || (ch==0x4B) || (ch==0x50) || (ch==0x4D)) 
+<                 return ch*MULT;
+---
+>             // if ((ch==0x48) || (ch==0x4B) || (ch==0x50) || (ch==0x4D)) 
+>             //     return ch*MULT;
+>             if (ch==0x48)
+>             	return UP_ARROW;
+>             else if (ch==0x4B)
+>             	return LEFT_ARROW;
+>             else if (ch==0x4D)
+>             	return RIGHT_ARROW;
+>             else if (ch==0x50)
+>             	return DOWN_ARROW;
