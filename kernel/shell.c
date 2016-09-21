@@ -47,8 +47,6 @@ WINDOW* shell_wnd = &shell_window_def;
 static WINDOW shell_window_def2 = {0, 1, 60, 14, 0, 0, '>'};
 WINDOW* shell_wnd2 = &shell_window_def2;
 /*******************************************/
-static WINDOW train_window=  {0, 0, 80, 10, 0, 0, ' '};
-
 void win_printfc(WINDOW *wnd,char c);
 
 typedef struct _buffer_window
@@ -178,11 +176,18 @@ void wnd_printf(WINDOW *wnd, char c)
      wprintf(shell_wnd,"clear                 - Clear window\n");
      wprintf(shell_wnd,"echo                  - Echo the string passed\n");
      wprintf(shell_wnd,"procs                 - Lists all processes\n");
-     wprintf(shell_wnd,"tstart                - Start the train\n");
-   //  wprintf(shell_wnd,"tstop                 - Stop the train\n");
+     wprintf(shell_wnd,"train                 - View the train commands\n");
      wprintf(shell_wnd,"sleep <duration>      - Sleep for a duration\n");
    
  }
+/*
+void print_all_procs(){
+    print_all_processes(shell_wnd);
+}
+
+void clear_shell_window(){
+    clear_window(shell_wnd);
+}*/
 
 void echo_shell()
 {
@@ -210,8 +215,7 @@ void sleep_shell(/*int len, char **arg_array*/)
 
 void train_func()
 {
-    //wprintf(shell_wnd,"The Train commands are under construction!\n");
-	init_train(&train_window);
+    wprintf(shell_wnd,"The Train commands are under construction!\n");
 }
 void remove_char(WINDOW* wnd)
 {
@@ -393,26 +397,22 @@ void execute_command(int id)
         case 3:
                     sleep_shell();break;
         case 4:
-               	    clear_window(shell_wnd);break;
+                clear_window(shell_wnd);break;
         case 5:
-                    echo_shell();break;
+                      echo_shell();break;
         case 6:
-                    train_func();break;
+                train_func();break;
         case 7:
                     print_about();break;
-	case 8: 
-		    /*remove_ready_queue(active_proc);  //this function has to be executed ib ttrain.c
-   		    resign();*/  //but  should be invoked from here
-		    break;
         default:
-                    wprintf(shell_wnd,"Unknown Command: %s \n",current_hist->buffer);break;
+            wprintf(shell_wnd,"Unknown Command: %s \n",current_hist->buffer);break;
     }
 }
 void shell_process(PROCESS proc, PARAM param)
 {
     //command *cmd;
     clear_window(kernel_window);
-    wprintf(shell_wnd, "************** Welcome to TOS shell ***************\n");
+    wprintf(shell_wnd, "*********** Welcome to TOS shell ***********\n");
     //wprintf(shell_wnd, "Type help for more information!\n");
     command *current_cmd;
     while(TRUE)
@@ -503,11 +503,8 @@ void init_shell()
     cmd_init("sleep",&shell_cmd[i++],i);
     cmd_init("clear",&shell_cmd[i++],i);
     cmd_init("echo",&shell_cmd[i++], i);
-    cmd_init("tstart",&shell_cmd[i++],i);
+    cmd_init("train",&shell_cmd[i++],i);
     cmd_init("about",&shell_cmd[i++],i);
-   // cmd_init("tstop",&shell_cmd[i++],i);
-    //cmd_init("tstop",&shell_cmd[i++],i);
-
     // init unused commands
     while (i < MAX_COMMANDS)
     {
@@ -530,7 +527,6 @@ void init_shell()
 
     //init_train(train_wnd);
 }
-
 
 
 
