@@ -1,4 +1,3 @@
-
 #include <kernel.h>
 
 #define TRAIN_NUMBER "20\0"
@@ -218,47 +217,47 @@ void run_config2_with_zam(){
 void run_config3_with_zam()
 {
         set_switch('4','R');
-	set_switch('3','R');
-	while(!get_switch_status("10"));
-	change_speed('5');
-	set_switch('5','R');
-	set_switch('6','G');
-	while(!get_switch_status("9"));
-	set_switch('5','G');
-	while(!get_switch_status("12"));
-	change_speed('0');
-	change_direction();
-	set_switch('7','R');
-	
-	while(!get_switch_status("13"));
-	
-	set_switch('2','R');
-	change_speed('5');
+    set_switch('3','R');
+    while(!get_switch_status("10"));
+    change_speed('5');
+    set_switch('5','R');
+    set_switch('6','G');
+    while(!get_switch_status("9"));
+    set_switch('5','G');
+    while(!get_switch_status("12"));
+    change_speed('0');
+    change_direction();
+    set_switch('7','R');
+    
+    while(!get_switch_status("13"));
+    
+    set_switch('2','R');
+    change_speed('5');
 
-	while(!get_switch_status("3"));
-	set_switch('1','R');
-	
-	while(!get_switch_status("12"));
-	change_speed('0');
-	set_switch('1','G');
-	set_switch('7','G');
-	change_speed('4');
-	while(!get_switch_status("9"));
-	change_speed('0');
+    while(!get_switch_status("3"));
+    set_switch('1','R');
+    
+    while(!get_switch_status("12"));
+    change_speed('0');
+    set_switch('1','G');
+    set_switch('7','G');
+    change_speed('4');
+    while(!get_switch_status("9"));
+    change_speed('0');
 
-	//trapping zamboni
+    //trapping zamboni
         wprintf(&train_window,"Trapping Zamboni \n");
-	set_switch('7','R');
-	set_switch('2','R');
-	while(!get_switch_status("10"));
-	set_switch('1','R');
+    set_switch('7','R');
+    set_switch('2','R');
+    while(!get_switch_status("10"));
+    set_switch('1','R');
 
-	/*******************************************/
+    /*******************************************/
         //go home
-	change_speed('4');
-	set_switch('4','R');
-	set_switch('3','R');
-	while(!get_switch_status("5"));
+    change_speed('4');
+    set_switch('4','R');
+    set_switch('3','R');
+    while(!get_switch_status("5"));
         change_speed('0');
         wprintf(&train_window,"Home :)\n");
 }
@@ -342,31 +341,27 @@ int check_zamboni()
     for(i=0;i<50;i++)
     {
         sleep(sleep_time);
-    wprintf(&train_window,".");
+		wprintf(&train_window,".");
         if(get_switch_status("4"))
         {
-                zam_found = TRUE;
-        wprintf(&train_window,"\nZamboni found\n");
-                for(i=0;i<50 && (zam_dir==0);i++)
-        {
-        if(get_switch_status("7"))
-            {
-                sleep(sleep_time);
-                return zam_dir=7;
-
-            }
-                
-        else if(get_switch_status("13"))
-            {
-                sleep(sleep_time);
-                return zam_dir=13;
-            }
+            zam_found = TRUE;
+            wprintf(&train_window,"\nZamboni found\n");
+            for(i=0;i<50 && (zam_dir==0);i++)
+			{
+				if(get_switch_status("7"))
+					{
+						sleep(sleep_time);
+						return zam_dir=7;
+					}
+						
+				else if(get_switch_status("13"))
+					{
+						sleep(sleep_time);
+						return zam_dir=13;
+					}
+			}
         }
-            }
-    //else
-             
-    
-        }
+	}
     if(!zam_found)
     wprintf(&train_window,"\nZamboni not found :(\n");
     return 0;
@@ -382,7 +377,7 @@ int check_config()
             config=6; //Running config 2 with Zamboni
         else
             config=1; //Running config 1 and 2 without Zamboni
-        }
+    }
     else if((get_switch_status("5"))&&(get_switch_status("11")))
     {
         if(zam_found)
@@ -390,20 +385,19 @@ int check_config()
         else
             config=3; //Running config 3 without Zamboni
         
-        }
+    }
     else if((get_switch_status("5"))&&(get_switch_status("16")))
     {
         if(zam_found)
             config=8;  //Running config 4 with Zamboni
         else
             config= 4;  //Running config 4 without Zamboni
-        }
-        else 
+    }
+    else 
     {
-            config=0;
-        }
-
-        return config;
+        config=0;
+    }
+	return config;
 }
 
 void train_process(PROCESS self, PARAM param)
